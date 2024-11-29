@@ -1,2 +1,4 @@
 ibapi==9.81.1.post1
 yfinance==0.2.50
+backtrader==1.9.78.123
+pandas==2.2.3

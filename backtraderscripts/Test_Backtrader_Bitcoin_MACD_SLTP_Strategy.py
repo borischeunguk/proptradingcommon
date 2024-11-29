@@ -1,3 +1,5 @@
+import datetime
+
 import backtrader as bt
 import pandas as pd
 import os
@@ -6,51 +8,29 @@ import logging
 
 from Backtrader_MACD_SLTP_Strategy import BacktraderMacdSltpStrategy
 from Logger_Config import setup_logger
-from BackTrader_Functions_Util import display_dict
+from BackTrader_Functions_Util import display_dict, read_csv_file
+
+now = datetime.datetime.now()
+timestamp = now.strftime("%Y%m%d_%H%M%S")  # e.g., 20240203_123456
+product_strategy_name = 'backtrader_macd_trailing_sltp_strategy_btcusdt4h'
+csv_filename = f"./results/{product_strategy_name}_result"
+csv_filename_timestamp = f"{csv_filename}_{timestamp}.csv"  # e.g., report_20240203_123456.csv
+logger_filename = f"./logs/{product_strategy_name}_test"
+logger_filename_timestamp = f"{logger_filename}_{timestamp}.log"  # e.g., report_20240203_123456.log
 
 # Create a console logger
-logger = setup_logger(__name__, log_file='backtrader_macd_sltp_strategy_btc_test.log', level=logging.INFO)
-
-# 1. Create a subclass of Strategy to define the indicators and logic
-
-# Use Strategy BacktraderCompositeStrategy
-
-# 2. Clean-up and load data using pandas
-
-# Replace 'file_name.csv' with the name of your CSV file
-# marketdata_file_path = 'AAPL_Bar_BackTrader_Data.csv'
-
-marketdata_file_path = 'BTC_full_1hour_2021_2023.txt'
-
-marketdata_file_path = 'BTC_full_1hour_2013.txt'
-
-marketdata_file_path = 'BTC_full_1hour.txt'
-
-marketdata_file_path = 'BTC_full_1hour_20230525_20230531.txt'
-
+logger = setup_logger(__name__, log_file=logger_filename_timestamp,level=logging.INFO)
 
 # Read the CSV file
 
 print(os.getcwd())
-marketdata_file_path = os.getcwd() + '/../resources/crypto_full_1hour_u2hwnn8/' + marketdata_file_path
+marketdata_file_path = os.getcwd() + '/../resources/crypto_4hour/btcusdt4h.csv'
 
-data_frame = pd.read_csv(marketdata_file_path, header=None)
-# data_frame = pd.read_csv(marketdata_file_path)
-
-data_frame.columns = ['date', 'open', 'high', 'low', 'close', 'volume']
-
-data_frame['date'] = pd.to_datetime(data_frame['date'])
-print(data_frame['date'].dtype)  # This should print datetime64[ns]
-
-data_frame = data_frame.sort_values(by='date')
-
-# Convert 'date' column to datetime and then format it to the desired string format
-# data_frame['date'] = pd.to_datetime(data_frame['date'], format='%Y%m%d  %H:%M:%S').dt.strftime('%Y-%m-%d %H:%M:%S')
-
-# Display the contents of the DataFrame
-# data_frame = data_frame.iloc[:1000]
-
+data_frame = read_csv_file(marketdata_file_path)
 print(data_frame)
+
+data_frame = data_frame[data_frame['date'].dt.year < 2025]
+email_notification = False
 
 print("Minimum Date:", data_frame['date'].min())
 print("Maximum Date:", data_frame['date'].max())
