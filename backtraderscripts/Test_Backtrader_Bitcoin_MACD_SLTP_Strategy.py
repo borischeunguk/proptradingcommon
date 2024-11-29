@@ -8,7 +8,8 @@ import logging
 
 from Backtrader_MACD_SLTP_Strategy import BacktraderMacdSltpStrategy
 from Logger_Config import setup_logger
-from BackTrader_Functions_Util import display_dict, read_csv_file
+from BackTrader_Functions_Util import display_dict, read_csv_file, extract_and_print_daily_return, \
+    extract_and_print_monthly_return
 
 now = datetime.datetime.now()
 timestamp = now.strftime("%Y%m%d_%H%M%S")  # e.g., 20240203_123456
@@ -61,12 +62,15 @@ cerebro.addstrategy(BacktraderMacdSltpStrategy,
                     pslow=pslow,
                     psignal=psignal)
 
+# Add analyzers
 cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name="sharpe")
 cerebro.addanalyzer(bt.analyzers.DrawDown, _name="drawdown")
 cerebro.addanalyzer(bt.analyzers.TradeAnalyzer, _name="trades")
 cerebro.addanalyzer(bt.analyzers.Returns, _name="returns")
 cerebro.addanalyzer(bt.analyzers.TimeDrawDown, _name="timedrawdown")
 cerebro.addanalyzer(bt.analyzers.TimeReturn, _name="timereturn")
+cerebro.addanalyzer(bt.analyzers.TimeReturn, timeframe=bt.TimeFrame.Days, _name="daily_return")
+cerebro.addanalyzer(bt.analyzers.TimeReturn, timeframe=bt.TimeFrame.Months, _name="monthly_return")
 
 results = cerebro.run(stdstats=True, runonce=False)
 # results = cerebro.run()  # run it all
@@ -91,6 +95,9 @@ display_dict(trade_info, logger=logger)
 
 print('Average daily time drawdown: \n')
 display_dict(timedrawdown_info, logger=logger)
+
+extract_and_print_daily_return(results, product_strategy_name, timestamp)
+extract_and_print_monthly_return(results, product_strategy_name, timestamp)
 
 cerebro.plot()  # and plot it with a single command
 # cerebro.plot(start=datetime.datetime(2023, 4, 21), end=datetime.datetime(2023, 4, 22))
