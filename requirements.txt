@@ -1,6 +1,7 @@
 ibapi==9.81.1.post1
-yfinance==0.2.50
+yfinance==0.2.41
 backtrader==1.9.78.123
-pandas==2.2.3
+pandas==2.0.3
 ipython==8.16.0
 quantstats==0.0.62
+numpy==1.25.2
