@@ -7,6 +7,10 @@ Requirements:
     Please refer to TWS API documentation for more details
      https://interactivebrokers.github.io/tws-api/
  
+Steps to create python virtual env:
+    python3.9 -m venv <yourvirtualenvname>
+    source <yourvirtualenvname>/bin/activate
+
 interactivebrokerscripts
     example code to download historical data from interactive broker
     
