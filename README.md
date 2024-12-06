@@ -10,6 +10,7 @@ Requirements:
 Steps to create python virtual env:
     python3.9 -m venv <yourvirtualenvname>
     source <yourvirtualenvname>/bin/activate
+    pip install -r requirements.txt
 
 interactivebrokerscripts
     example code to download historical data from interactive broker
