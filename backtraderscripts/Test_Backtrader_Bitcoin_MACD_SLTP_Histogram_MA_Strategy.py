@@ -32,7 +32,7 @@ marketdata_file_path = 'BTC_full_1hour_20230525_20230531.txt'
 # Read the CSV file
 
 print(os.getcwd())
-marketdata_file_path = os.getcwd() + '/../resources/crypto_full_1hour_u2hwnn8/' + marketdata_file_path
+marketdata_file_path = os.getcwd() + '/../resources/crypto_1hour/' + marketdata_file_path
 
 data_frame = pd.read_csv(marketdata_file_path, header=None)
 # data_frame = pd.read_csv(marketdata_file_path)
