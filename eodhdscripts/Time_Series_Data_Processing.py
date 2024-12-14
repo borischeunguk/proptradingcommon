@@ -1,35 +1,23 @@
 import datetime
-
-import pandas as pd
-import json
 import os
 
-# Load the JSON file
+from eodhdscripts.Eodhd_Functions_Util import process_json_with_path
 
+# Specify the JSON file path and JSON path expression, use https://jsonformatter.org/ to reformat the JSON file
+json_path_expr = 'Earnings.History'
+
+# Load the JSON file
 print(os.getcwd())
 product_code = 'AAPL'
 fundamental_file_path = f"{product_code}.json"
 json_file_path = os.getcwd() + '/../resources/fundamental/' + fundamental_file_path
 
-# Load the JSON data
-with open(json_file_path) as f:
-    data = json.load(f)
-
-# Extract Earnings History
-earnings_history = data['Earnings']['History']
-
-# Convert the extracted data to a DataFrame
-earnings_df = pd.DataFrame.from_dict(earnings_history, orient='index')
-
-# Convert index to datetime
-earnings_df.index = pd.to_datetime(earnings_df.index)
-earnings_df.sort_index(inplace=True)
-
-# Fill missing EPS values with 0 for simplicity
-earnings_df['epsActual'].fillna(0, inplace=True)
+# Process the JSON file with the specified JSON path
+earnings_df = process_json_with_path(json_file_path, json_path_expr)
 
 # Save the DataFrame to a CSV file
 now = datetime.datetime.now()
 timestamp = now.strftime("%Y%m%d_%H%M%S")  # e.g., 20240203_123456
-csv_file_name = f"results/{product_code}_earnings_history_{timestamp}.csv"
+json_path_expr = json_path_expr.replace('.', '_')
+csv_file_name = f"results/{product_code}_{json_path_expr}_{timestamp}.csv"
 earnings_df.to_csv(csv_file_name)
