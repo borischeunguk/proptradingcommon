@@ -21,3 +21,12 @@ def process_json_with_path(json_file_path, json_path_expr):
     earnings_df.sort_index(inplace=True)
 
     return earnings_df
+
+def reformat_json(input_file_path, output_file_path):
+    # Load the JSON data
+    with open(input_file_path, 'r') as f:
+        data = json.load(f)
+
+    # Reformat the JSON data (pretty print with indentation)
+    with open(output_file_path, 'w') as f:
+        json.dump(data, f, indent=2)

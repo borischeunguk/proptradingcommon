@@ -37,6 +37,15 @@ class MacdHistoThresholdIndicator(bt.Indicator):
         # self.lines.histogram_ma = bt.indicators.MovingAverageSimple(self.macd.lines.histo,
         #                                                             period=self.p.histogram_ma_period)
     def next(self):
+
+        # self.sma = bt.indicators.SimpleMovingAverage(self.data.close, period=10)
+        #
+        # last_10_bars = list(self.data.close.get(size=10))
+        #
+        # print(last_10_bars)
+        #
+        # avg = sum(last_10_bars) / len(last_10_bars)
+
         bar_seq_number = len(self.data)
         if bar_seq_number < self.p.look_back_bars:
             return
