@@ -1,6 +1,13 @@
 # proptradingcommon
 Common code for prop trading
 ```
+China Stock Future Market Data:
+    1. Sample Data available in resources/china_stock_futures_1min
+    2. Full 202411 data available in Baidu Netdisk as follows:
+        通过网盘分享的文件：10-11月1min股指期货数据.zip
+        链接: https://pan.baidu.com/s/1zQkb_-28llTPP4R-xSPsKg?pwd=qeqg 提取码: qeqg 
+        --来自百度网盘超级会员v6的分享
+
 Requirements:
     tested on python 3.9.16
     Trader Workstation (TWS) is required to run the code
