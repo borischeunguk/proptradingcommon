@@ -6,6 +6,12 @@ import pandas as pd
 data_dir_str = '../resources/'
 market_data_type = 'china_csi_500_stock_future_202410_202411_1min'
 product_name = 'IC'
+product_name = 'IF'
+product_name = 'IH'
+product_name = 'T'
+product_name = 'TF'
+product_name = 'TS'
+product_name = 'TL'
 zip_dir = os.path.join(os.getcwd(), data_dir_str, market_data_type, product_name)
 combined_csv_path = os.path.join(zip_dir, 'combined_data.csv')
 
